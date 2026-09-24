@@ -1,5 +1,6 @@
 services:
   app:
+    container_name: ${WORKING_DIR}-app
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,6 +13,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
 
   web:
+    container_name: ${WORKING_DIR}-web
     image: nginx:alpine
     ports:
       - "8080:80"
@@ -22,6 +24,7 @@ services:
       - app
 
   db:
+    container_name: ${WORKING_DIR}-db
     image: mysql:8.0
     restart: always
     environment:
@@ -35,6 +38,7 @@ services:
       - db_data:/var/lib/mysql
 
   phpmyadmin:
+    container_name: ${WORKING_DIR}-phpmyadmin
     image: phpmyadmin/phpmyadmin
     ports:
       - "8081:80"
