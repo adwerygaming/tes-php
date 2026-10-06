@@ -1,0 +1,20 @@
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+}
+
+form {
+    max-width: 30vh;
+    padding: 12px;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+}
