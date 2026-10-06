@@ -1,0 +1,20 @@
+.kasir-php-container {
+    background-color: #f8f8f8;
+    padding: 2em;
+    width: 18rem;
+    border: 4px;
+    border-color: black;
+    border-radius: 8px;
+}
+
+.kasir-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.kasir-php-container > h1, h2, h3, h4 {
+    text-align: center;
+}
