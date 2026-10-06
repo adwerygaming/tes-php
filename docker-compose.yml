@@ -35,7 +35,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - db_data:/var/lib/mysql
+      - ./docker/db_data/${WORKING_DIR}:/var/lib/mysql
 
   phpmyadmin:
     container_name: ${WORKING_DIR}-phpmyadmin
@@ -46,6 +46,3 @@ services:
       PMA_HOST: db
     depends_on:
       - db
-
-volumes:
-  db_data:

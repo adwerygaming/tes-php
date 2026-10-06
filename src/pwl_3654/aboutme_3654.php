@@ -26,6 +26,17 @@
             echo "<p>NIM: $nim</p>";
             echo "<p>Berkuliah di: $college</p>";
             echo "<p>Prodi: $prodi</p>";
+            
+            $foods = array("Nasi Goreng", "Mie Goreng", "Sate Ayam", "Bakso", "Rendang");
+
+            for ($i = 0; $i < count($foods); $i++) {
+                echo "<p>Makanan favorit ke-" . ($i + 1) . ": " . $foods[$i] . "</p>";
+            }
+
+            // for ($i = 1; $i <= 65535; $i++) {
+            //     echo "<p>Halo ke-$i</p>";
+            // }
+            
             ?>
 
         </div>
