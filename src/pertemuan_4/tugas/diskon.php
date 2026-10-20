@@ -60,10 +60,12 @@
 
         if ($member) {
             if ($totalPembelian >= 100000) {
-                $diskon = 0.1 * $totalPembelian;
-            } elseif ($totalPembelian >= 100000) {
                 $diskon = 0.2 * $totalPembelian;
             } else {
+                $diskon = 0.1 * $totalPembelian;
+            }
+        } else {
+            if ($totalPembelian >= 100000) {
                 $diskon = 0.1 * $totalPembelian;
             }
         }

@@ -15,7 +15,7 @@
         "Keyboard",
         "Mouse Wireless",
         "Monitor LED"
-    );
+    );  
 
     $buku = array(
         "judul" => "Belajar PHP untuk Pemula",
