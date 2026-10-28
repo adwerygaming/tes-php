@@ -1,3 +1,3 @@
 <?php 
-setcookie("barang", "", $time() - 10);
+setcookie("barang", "", time() - 10);
 ?>

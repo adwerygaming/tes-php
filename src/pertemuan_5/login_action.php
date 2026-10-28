@@ -15,6 +15,7 @@ if (mysqli_num_rows($hasil) > 0) {
     header("Location: welcome.php");
     exit();
 } else {
-    echo "<p>wrong credentials bro</p>";
+    echo "<h1>Username atau Password salah!</h1>";
+    echo "<p><a href='login.php'>Kembali ke halaman login</a></p>";
 }
 ?>

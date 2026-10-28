@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+
+    <link rel="stylesheet" href="./styles/style.css">
 </head>
 
 <body>
@@ -12,7 +14,7 @@
         <div class="form">
             <form action="login_action.php" method="POST" class="login-form">
                 <input type="text" placeholder="username" name="username">
-                <input type="text" placeholder="password" name="password">
+                <input type="password" placeholder="password" name="password">
                 <button type="submit">Login</button>
             </form>
         </div>
