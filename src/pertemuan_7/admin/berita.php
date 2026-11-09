@@ -89,7 +89,7 @@ include "header.php";
                     <td><?= htmlspecialchars($data["username"]) ?></td>
                     <?php
                     // Status berita: draft (belum tampil) atau publish (tampil di halaman depan)
-                    $status = $data["status"] ?? "terbit";
+                    $status = $data["status"];
                     ?>
                     <td class="text-center text-nowrap">
                         <?php if ($status == "draft") : ?>
@@ -104,7 +104,7 @@ include "header.php";
                                 class="btn btn-sm btn-warning">Edit</a>
 
                             <?php if ($status == "draft") : ?>
-                                <a href="berita_status.php?id=<?= urlencode($data["id"]) ?>&amp;status=publish"
+                                <a href="berita_status.php?id=<?= urlencode($data["id"]) ?>&amp;status=terbit"
                                     class="btn btn-sm btn-success">Terbitkan</a>
                             <?php else : ?>
                                 <a href="berita_status.php?id=<?= urlencode($data["id"]) ?>&amp;status=draft"
