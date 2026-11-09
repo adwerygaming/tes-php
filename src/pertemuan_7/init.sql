@@ -19,6 +19,8 @@ CREATE TABLE news (
     username VARCHAR(20) REFERENCES user(username) ON DELETE CASCADE
 );
 
+ALTER TABLE news ADD COLUMN status ENUM("draft", "publish") NOT NULL DEFAULT "draft";
+
 INSERT INTO user VALUES 
     ('masdepan', 'masdepanwashere', 'Devan Aditiya', 'masdepan@masdepan.my.id'),
     ('mika', '123123123123', 'Mikael', 'mikael@masdepan.my.id'),

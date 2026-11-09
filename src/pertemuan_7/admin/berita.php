@@ -2,7 +2,7 @@
 include "cek_login.php";
 
 // Ambil semua data berita, diurutkan dari yang terbaru
-$sql = "SELECT * FROM berita ORDER BY berita_tanggal DESC, berita_id DESC";
+$sql = "SELECT * FROM news ORDER BY created_at DESC, id DESC";
 $hasil = mysqli_query($config, $sql);
 
 // Jumlah baris data yang didapat
@@ -65,10 +65,10 @@ include "header.php";
             <?php while ($data = mysqli_fetch_assoc($hasil)) : ?>
                 <tr>
                     <td class="text-center"><?= $no ?></td>
-                    <td class="text-nowrap"><?= date("d-m-Y", strtotime($data["berita_tanggal"])) ?></td>
+                    <td class="text-nowrap"><?= date("d-m-Y", strtotime($data["created_at"])) ?></td>
                     <td class="text-center">
-                        <?php if ($data["berita_gambar"] != "" && file_exists($folder . $data["berita_gambar"])) : ?>
-                            <img src="<?= $folder_url . htmlspecialchars($data["berita_gambar"]) ?>"
+                        <?php if ($data["image"] != "" && file_exists($folder . $data["image"])) : ?>
+                            <img src="<?= $folder_url . htmlspecialchars($data["image"]) ?>"
                                 alt="Thumbnail berita" class="gambar-tabel rounded"
                                 width="80" height="60" loading="lazy">
                         <?php else : ?>
@@ -76,20 +76,20 @@ include "header.php";
                         <?php endif; ?>
                     </td>
                     <td>
-                        <div class="fw-semibold"><?= htmlspecialchars($data["berita_judul"]) ?></div>
+                        <div class="fw-semibold"><?= htmlspecialchars($data["title"]) ?></div>
                         <?php
                         // Ringkasan isi berita agar tabel tidak terlalu panjang
-                        $ringkasan = strip_tags($data["berita_isi"]);
+                        $ringkasan = strip_tags($data["isi"]);
                         if (mb_strlen($ringkasan) > 90) {
                             $ringkasan = mb_substr($ringkasan, 0, 90) . "...";
                         }
                         ?>
                         <div class="text-muted small"><?= htmlspecialchars($ringkasan) ?></div>
                     </td>
-                    <td><?= htmlspecialchars($data["user_nama"]) ?></td>
+                    <td><?= htmlspecialchars($data["username"]) ?></td>
                     <?php
                     // Status berita: draft (belum tampil) atau publish (tampil di halaman depan)
-                    $status = $data["berita_status"];
+                    $status = $data["status"] ?? "terbit";
                     ?>
                     <td class="text-center text-nowrap">
                         <?php if ($status == "draft") : ?>
@@ -100,18 +100,18 @@ include "header.php";
                     </td>
                     <td class="text-center">
                         <div class="d-flex flex-wrap justify-content-center gap-1">
-                            <a href="berita_edit.php?id=<?= urlencode($data["berita_id"]) ?>"
+                            <a href="berita_edit.php?id=<?= urlencode($data["id"]) ?>"
                                 class="btn btn-sm btn-warning">Edit</a>
 
                             <?php if ($status == "draft") : ?>
-                                <a href="berita_status.php?id=<?= urlencode($data["berita_id"]) ?>&amp;status=publish"
+                                <a href="berita_status.php?id=<?= urlencode($data["id"]) ?>&amp;status=publish"
                                     class="btn btn-sm btn-success">Terbitkan</a>
                             <?php else : ?>
-                                <a href="berita_status.php?id=<?= urlencode($data["berita_id"]) ?>&amp;status=draft"
+                                <a href="berita_status.php?id=<?= urlencode($data["id"]) ?>&amp;status=draft"
                                     class="btn btn-sm btn-secondary">Jadikan Draft</a>
                             <?php endif; ?>
 
-                            <a href="berita_hapus.php?id=<?= urlencode($data["berita_id"]) ?>"
+                            <a href="berita_hapus.php?id=<?= urlencode($data["id"]) ?>"
                                 class="btn btn-sm btn-danger"
                                 onclick="return confirm('Yakin ingin menghapus berita ini?')">Hapus</a>
                         </div>

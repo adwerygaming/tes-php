@@ -1,8 +1,8 @@
 <?php
 $config = mysqli_connect(
-    getenv('DB_HOST'),
+    "localhost",
     "root",
-    getenv('DB_PASSWORD'),
+    "",
     "dataweb3654"
 );
 

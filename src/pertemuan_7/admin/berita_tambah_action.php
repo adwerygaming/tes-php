@@ -60,7 +60,7 @@ if (!move_uploaded_file($sementara, $folder . $gambarbaru)) {
 
 // 4. Simpan data ke tabel berita
 try {
-    $sql = "INSERT INTO berita (berita_judul, berita_isi, berita_gambar, berita_tanggal, user_nama)
+    $sql = "INSERT INTO news (title, isi, image, created_at, username)
             VALUES (?, ?, ?, ?, ?)";
 
     $stmt = mysqli_prepare($config, $sql);
@@ -72,6 +72,9 @@ try {
     // Berhasil, kembali ke daftar berita
     header("Location: berita.php?pesan=tambah");
 } catch (mysqli_sql_exception $e) {
+    die("Gagal menyimpan data berita: " . $e->getMessage());
+
+
     // Kalau gagal simpan, gambar yang sudah dipindahkan dihapus lagi
     if (file_exists($folder . $gambarbaru)) {
         unlink($folder . $gambarbaru);

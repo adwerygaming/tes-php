@@ -17,7 +17,7 @@ if ($id == "") {
 }
 
 // 3. Cari data berita untuk mendapatkan nama gambarnya
-$sql = "SELECT * FROM berita WHERE berita_id = ?";
+$sql = "SELECT * FROM news WHERE id = ?";
 $stmt = mysqli_prepare($config, $sql);
 mysqli_stmt_bind_param($stmt, "i", $id);
 mysqli_stmt_execute($stmt);
@@ -32,7 +32,7 @@ if (!$data) {
 
 // 4. Hapus data dari tabel berita
 try {
-    $sql = "DELETE FROM berita WHERE berita_id = ?";
+    $sql = "DELETE FROM news WHERE id = ?";
 
     $stmt = mysqli_prepare($config, $sql);
     mysqli_stmt_bind_param($stmt, "i", $id);
