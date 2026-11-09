@@ -1,0 +1,304 @@
+=====================================================
+BASIC SQL EXAMPLES (MySQL / MariaDB)
+Based on the praktikum tables: user and berita
+=====================================================
+
+
+-----------------------------------------------------
+1. DDL (Data Definition Language): structure
+-----------------------------------------------------
+
+-- Create database
+CREATE DATABASE dataweb01;
+USE dataweb01;
+
+-- Show databases / tables
+SHOW DATABASES;
+SHOW TABLES;
+
+-- Create table user
+CREATE TABLE user (
+    user_nama         VARCHAR(20) PRIMARY KEY,
+    user_password     VARCHAR(20) NOT NULL,
+    user_namalengkap  VARCHAR(50) NOT NULL,
+    user_email        VARCHAR(50) NOT NULL
+);
+
+-- Create table berita with foreign key
+CREATE TABLE berita (
+    berita_id       INT(11) AUTO_INCREMENT PRIMARY KEY,
+    berita_judul    VARCHAR(150) NOT NULL,
+    berita_isi      TEXT NOT NULL,
+    berita_gambar   VARCHAR(25),
+    berita_tanggal  DATE NOT NULL,
+    user_nama       VARCHAR(20) NOT NULL,
+    CONSTRAINT fk_berita_user
+        FOREIGN KEY (user_nama) REFERENCES user(user_nama)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Show table structure
+DESCRIBE berita;
+SHOW CREATE TABLE berita;
+
+-- Add a column (Tugas 7: berita_status)
+ALTER TABLE berita
+    ADD berita_status ENUM('publish','draft') NOT NULL DEFAULT 'publish';
+
+-- Change a column type
+ALTER TABLE berita MODIFY berita_judul VARCHAR(200) NOT NULL;
+
+-- Rename a column
+ALTER TABLE berita CHANGE berita_gambar berita_foto VARCHAR(25);
+
+-- Drop a column
+ALTER TABLE berita DROP COLUMN berita_status;
+
+-- Add an index
+CREATE INDEX idx_tanggal ON berita(berita_tanggal);
+
+-- Rename table
+RENAME TABLE berita TO berita_lama;
+
+-- Delete all rows quickly (resets AUTO_INCREMENT)
+TRUNCATE TABLE berita;
+
+-- Delete table / database (careful, permanent)
+DROP TABLE berita;
+DROP DATABASE dataweb01;
+
+
+-----------------------------------------------------
+2. DML (Data Manipulation Language): data
+-----------------------------------------------------
+
+-- INSERT: all columns, in table order
+INSERT INTO user
+VALUES ('irma', '1234', 'Irma Rofni', 'irma@gmail.com');
+
+-- INSERT: with column names (recommended)
+INSERT INTO user (user_nama, user_password, user_namalengkap, user_email)
+VALUES ('fatih', '4321', 'El Fatih', 'fatih@gmail.com');
+
+-- INSERT: many rows at once
+INSERT INTO user (user_nama, user_password, user_namalengkap, user_email)
+VALUES
+    ('amel',    '123456', 'Amalia Klarisa', 'amel@gmail.com'),
+    ('bhatara', '1234',   'Bhatara Sami',   'bhatara@gmail.com'),
+    ('jona',    '12345',  'Jonathan Arbie', 'jonathan@gmail.com');
+
+-- INSERT into berita (berita_id is auto increment, so skip it)
+INSERT INTO berita (berita_judul, berita_isi, berita_gambar, berita_tanggal, user_nama)
+VALUES ('Latihan Praktikum 9', 'Belajar menggunakan phpMyAdmin', 'b1.jpg', '2026-11-09', 'irma');
+
+-- SELECT: everything
+SELECT * FROM user;
+
+-- SELECT: specific columns
+SELECT user_nama, user_email FROM user;
+
+-- SELECT: with condition
+SELECT * FROM user WHERE user_nama = 'irma';
+
+-- SELECT: alias
+SELECT user_namalengkap AS nama, user_email AS email FROM user;
+
+-- SELECT: sorting
+SELECT * FROM berita ORDER BY berita_tanggal DESC, berita_id DESC;
+
+-- SELECT: limit and offset (pagination)
+SELECT * FROM berita ORDER BY berita_id DESC LIMIT 5;
+SELECT * FROM berita ORDER BY berita_id DESC LIMIT 5 OFFSET 10;
+
+-- SELECT: remove duplicates
+SELECT DISTINCT user_nama FROM berita;
+
+-- SELECT: searching text
+SELECT * FROM berita WHERE berita_judul LIKE '%Jogja%';      -- contains
+SELECT * FROM berita WHERE berita_judul LIKE 'Candi%';       -- starts with
+SELECT * FROM user   WHERE user_email LIKE '%@gmail.com';    -- ends with
+
+-- SELECT: operators
+SELECT * FROM berita WHERE berita_tanggal BETWEEN '2026-01-01' AND '2026-12-31';
+SELECT * FROM berita WHERE user_nama IN ('irma', 'fatih');
+SELECT * FROM berita WHERE berita_gambar IS NULL;
+SELECT * FROM berita WHERE berita_gambar IS NOT NULL;
+SELECT * FROM berita WHERE user_nama = 'irma' AND berita_status = 'publish';
+SELECT * FROM berita WHERE user_nama = 'irma' OR user_nama = 'fatih';
+SELECT * FROM berita WHERE NOT user_nama = 'irma';
+
+-- UPDATE (always use WHERE, or every row changes!)
+UPDATE user
+SET user_password = '9999', user_email = 'irma12@gmail.com'
+WHERE user_nama = 'irma';
+
+UPDATE berita SET berita_status = 'draft' WHERE berita_id = 3;
+
+-- DELETE (always use WHERE, or every row is removed!)
+DELETE FROM berita WHERE berita_id = 3;
+DELETE FROM user WHERE user_nama = 'jona';
+
+
+-----------------------------------------------------
+3. AGGREGATE FUNCTIONS and GROUP BY
+-----------------------------------------------------
+
+SELECT COUNT(*) FROM berita;                          -- total rows
+SELECT COUNT(*) AS total FROM berita WHERE berita_status = 'publish';
+SELECT MAX(berita_tanggal) FROM berita;               -- newest date
+SELECT MIN(berita_tanggal) FROM berita;               -- oldest date
+SELECT MAX(berita_id) FROM berita;
+SELECT AVG(LENGTH(berita_isi)) FROM berita;           -- avg content length
+SELECT SUM(berita_id) FROM berita;
+
+-- Count news per author
+SELECT user_nama, COUNT(*) AS jumlah_berita
+FROM berita
+GROUP BY user_nama;
+
+-- Only authors with more than 1 news
+SELECT user_nama, COUNT(*) AS jumlah_berita
+FROM berita
+GROUP BY user_nama
+HAVING COUNT(*) > 1;
+
+-- Count per status
+SELECT berita_status, COUNT(*) AS jumlah
+FROM berita
+GROUP BY berita_status;
+
+
+-----------------------------------------------------
+4. JOIN (combine tables)
+-----------------------------------------------------
+
+-- INNER JOIN: only rows that match in both tables
+SELECT berita.berita_judul, berita.berita_tanggal, user.user_namalengkap
+FROM berita
+INNER JOIN user ON berita.user_nama = user.user_nama;
+
+-- Same with table aliases
+SELECT b.berita_judul, u.user_namalengkap
+FROM berita b
+JOIN user u ON b.user_nama = u.user_nama
+WHERE b.berita_status = 'publish'
+ORDER BY b.berita_tanggal DESC;
+
+-- LEFT JOIN: all users, even those without any news
+SELECT u.user_nama, b.berita_judul
+FROM user u
+LEFT JOIN berita b ON u.user_nama = b.user_nama;
+
+-- Users that have NO news
+SELECT u.user_nama
+FROM user u
+LEFT JOIN berita b ON u.user_nama = b.user_nama
+WHERE b.berita_id IS NULL;
+
+
+-----------------------------------------------------
+5. SUBQUERY
+-----------------------------------------------------
+
+-- News written by users whose email is gmail
+SELECT * FROM berita
+WHERE user_nama IN (SELECT user_nama FROM user WHERE user_email LIKE '%@gmail.com');
+
+-- Newest news
+SELECT * FROM berita
+WHERE berita_tanggal = (SELECT MAX(berita_tanggal) FROM berita);
+
+
+-----------------------------------------------------
+6. USEFUL FUNCTIONS
+-----------------------------------------------------
+
+SELECT NOW();                                          -- date and time now
+SELECT CURDATE();                                      -- date now
+SELECT DATE_FORMAT(berita_tanggal, '%d-%m-%Y') FROM berita;
+SELECT UPPER(user_nama), LOWER(user_email) FROM user;
+SELECT CONCAT(user_namalengkap, ' <', user_email, '>') FROM user;
+SELECT LENGTH(berita_judul) FROM berita;
+SELECT SUBSTRING(berita_isi, 1, 90) FROM berita;       -- first 90 chars
+SELECT IFNULL(berita_gambar, 'no-image.jpg') FROM berita;
+
+
+-----------------------------------------------------
+7. DCL (Data Control Language): users and permissions
+-----------------------------------------------------
+
+-- Create a database user
+CREATE USER 'webuser'@'localhost' IDENTIFIED BY 'passwordkuat';
+
+-- Give permissions on one database
+GRANT SELECT, INSERT, UPDATE, DELETE ON dataweb01.* TO 'webuser'@'localhost';
+
+-- Give all permissions
+GRANT ALL PRIVILEGES ON dataweb01.* TO 'webuser'@'localhost';
+
+-- Apply changes
+FLUSH PRIVILEGES;
+
+-- See permissions
+SHOW GRANTS FOR 'webuser'@'localhost';
+
+-- Remove permissions / user
+REVOKE INSERT ON dataweb01.* FROM 'webuser'@'localhost';
+DROP USER 'webuser'@'localhost';
+
+
+-----------------------------------------------------
+8. TCL (Transaction Control Language)
+-----------------------------------------------------
+
+START TRANSACTION;
+    INSERT INTO user (user_nama, user_password, user_namalengkap, user_email)
+    VALUES ('budi', '1111', 'Budi Santoso', 'budi@gmail.com');
+
+    INSERT INTO berita (berita_judul, berita_isi, berita_gambar, berita_tanggal, user_nama)
+    VALUES ('Berita Budi', 'Isi berita', 'b2.jpg', CURDATE(), 'budi');
+COMMIT;        -- save everything
+-- ROLLBACK;   -- or cancel everything since START TRANSACTION
+
+
+-----------------------------------------------------
+9. PREPARED STATEMENT SYNTAX (PHP mysqli)
+-----------------------------------------------------
+-- The ? placeholders are filled by mysqli_stmt_bind_param().
+-- Type letters: s = string, i = integer, d = double, b = blob
+
+-- INSERT
+INSERT INTO berita (berita_judul, berita_isi, berita_gambar, berita_tanggal, user_nama)
+VALUES (?, ?, ?, ?, ?);                      -- "sssss"
+
+-- UPDATE
+UPDATE berita
+SET berita_judul = ?, berita_isi = ?, berita_tanggal = ?, berita_gambar = ?
+WHERE berita_id = ?;                         -- "ssssi"
+
+-- SELECT
+SELECT * FROM berita WHERE berita_id = ?;    -- "i"
+
+-- DELETE
+DELETE FROM berita WHERE berita_id = ?;      -- "i"
+
+
+-----------------------------------------------------
+10. HANDY EXTRAS
+-----------------------------------------------------
+
+-- Foreign key checks off (e.g. when importing or truncating related tables)
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE berita;
+TRUNCATE TABLE user;
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- Backup / restore from terminal (not SQL, run in shell)
+--   mysqldump -u root -p dataweb01 > backup.sql
+--   mysql -u root -p dataweb01 < backup.sql
+
+-- Last inserted auto increment id
+SELECT LAST_INSERT_ID();
+
+-- Check which database is selected
+SELECT DATABASE();
