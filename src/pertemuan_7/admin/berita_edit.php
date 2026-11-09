@@ -11,7 +11,7 @@ $folder = __DIR__ . "/../images/berita/";
 $id = $_GET["id"] ?? "";
 
 // Cari data berita yang akan diubah
-$sql = "SELECT * FROM berita WHERE berita_id = ?";
+$sql = "SELECT * FROM news WHERE id = ?";
 $stmt = mysqli_prepare($config, $sql);
 mysqli_stmt_bind_param($stmt, "i", $id);
 mysqli_stmt_execute($stmt);
@@ -27,7 +27,7 @@ if (!$data) {
 
 // Info gambar lama yang akan ditampilkan di halaman ini
 // Nama file (sudah termasuk ekstensinya) diambil dari database
-$nama_gambar     = $data["berita_gambar"];
+$nama_gambar     = $data["image"];
 
 // Ukuran file dan resolusi tidak disimpan di database,
 // jadi dibaca langsung dari file gambar di folder images/berita
@@ -73,34 +73,34 @@ $pesan = $_GET["pesan"] ?? "";
 
         <form action="berita_edit_action.php" method="post" enctype="multipart/form-data" class="box">
 
-            <input type="hidden" name="id" value="<?= htmlspecialchars($data["berita_id"]) ?>">
+            <input type="hidden" name="id" value="<?= htmlspecialchars($data["id"]) ?>">
 
             <div class="mb-3">
                 <label for="judul" class="form-label">Judul Berita</label>
                 <input type="text" class="form-control" id="judul" name="judul"
-                    value="<?= htmlspecialchars($data["berita_judul"]) ?>"
+                    value="<?= htmlspecialchars($data["title"]) ?>"
                     maxlength="150" required>
             </div>
 
             <div class="mb-3">
                 <label for="isi" class="form-label">Isi Berita</label>
-                <textarea class="form-control" id="isi" name="isi" rows="8" required><?= htmlspecialchars($data["berita_isi"]) ?></textarea>
+                <textarea class="form-control" id="isi" name="isi" rows="8" required><?= htmlspecialchars($data["isi"]) ?></textarea>
             </div>
 
             <div class="mb-3">
                 <label for="tanggal" class="form-label">Tanggal Berita</label>
                 <input type="date" class="form-control" id="tanggal" name="tanggal"
-                    value="<?= htmlspecialchars($data["berita_tanggal"]) ?>" required>
+                    value="<?= htmlspecialchars($data["created_at"]) ?>" required>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Gambar Saat Ini</label>
                 <div>
-                    <?php if ($data["berita_gambar"] != "" && file_exists($folder . $data["berita_gambar"])) : ?>
-                        <img src="<?= $folder_url . htmlspecialchars($data["berita_gambar"]) ?>"
+                    <?php if ($data["image"] != "" && file_exists($folder . $data["image"])) : ?>
+                        <img src="<?= $folder_url . htmlspecialchars($data["image"]) ?>"
                             alt="Gambar berita" class="gambar-preview rounded">
-                    <?php elseif ($data["berita_gambar"] != "") : ?>
-                        <span class="text-muted">File gambar "<?= htmlspecialchars($data["berita_gambar"]) ?>" tidak
+                    <?php elseif ($data["image"] != "") : ?>
+                        <span class="text-muted">File gambar "<?= htmlspecialchars($data["image"]) ?>" tidak
                             ditemukan di folder images/berita.</span>
                     <?php else : ?>
                         <span class="text-muted">Belum ada gambar.</span>
@@ -139,7 +139,7 @@ $pesan = $_GET["pesan"] ?? "";
             <div class="mb-3">
                 <label class="form-label">Penulis</label>
                 <input type="text" class="form-control"
-                    value="<?= htmlspecialchars($data["user_nama"]) ?>" readonly>
+                    value="<?= htmlspecialchars($data["username"]) ?>" readonly>
                 <div class="form-text">Penulis tidak bisa diubah.</div>
             </div>
 

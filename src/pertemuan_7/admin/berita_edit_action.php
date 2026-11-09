@@ -20,7 +20,7 @@ if ($judul == "" || $isi == "" || $tanggal == "") {
 }
 
 // 3. Cari data lama untuk mendapatkan nama gambar sebelumnya
-$sql = "SELECT * FROM berita WHERE berita_id = ?";
+$sql = "SELECT * FROM news WHERE id = ?";
 $stmt = mysqli_prepare($config, $sql);
 mysqli_stmt_bind_param($stmt, "i", $id);
 mysqli_stmt_execute($stmt);
@@ -35,7 +35,7 @@ if (!$data) {
 }
 
 // Gambar lama tetap dipakai kalau tidak ada gambar baru
-$gambarbaru = $data["berita_gambar"];
+$gambarbaru = $data["image"];
 
 // Kode 4 artinya tidak ada file yang dipilih
 if (isset($_FILES["gambar"]) && $_FILES["gambar"]["error"] != 4) {
@@ -84,25 +84,25 @@ if (isset($_FILES["gambar"]) && $_FILES["gambar"]["error"] != 4) {
 
 // 4. Simpan perubahan ke database
 try {
-    $sql = "UPDATE berita
-            SET berita_judul = ?, berita_isi = ?, berita_tanggal = ?, berita_gambar = ?
-            WHERE berita_id = ?";
+    $sql = "UPDATE news
+            SET title = ?, isi = ?, created_at = ?, image = ?
+            WHERE id = ?";
 
     $stmt = mysqli_prepare($config, $sql);
     mysqli_stmt_bind_param($stmt, "ssssi", $judul, $isi, $tanggal, $gambarbaru, $id);
     mysqli_stmt_execute($stmt);
 
     // Kalau gambar diganti, gambar lama dihapus dari folder
-    if ($gambarbaru != $data["berita_gambar"] && $data["berita_gambar"] != "") {
-        if (file_exists($folder . $data["berita_gambar"])) {
-            unlink($folder . $data["berita_gambar"]);
+    if ($gambarbaru != $data["image"] && $data["image"] != "") {
+        if (file_exists($folder . $data["image"])) {
+            unlink($folder . $data["image"]);
         }
     }
 
     header("Location: berita.php?pesan=edit");
 } catch (mysqli_sql_exception $e) {
     // Kalau gagal simpan, gambar baru yang sudah dipindahkan dihapus lagi
-    if ($gambarbaru != $data["berita_gambar"] && file_exists($folder . $gambarbaru)) {
+    if ($gambarbaru != $data["image"] && file_exists($folder . $gambarbaru)) {
         unlink($folder . $gambarbaru);
     }
 
