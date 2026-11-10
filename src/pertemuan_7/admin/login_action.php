@@ -12,7 +12,7 @@ $hasil = mysqli_query($config, $sql) or exit("Erroe query: $sql");
 if (mysqli_num_rows($hasil) > 0) {
     $data = mysqli_fetch_assoc($hasil);
     $_SESSION['username'] = $data['username'];
-    header("Location: welcome.php");
+    header("Location: berita.php");
     exit();
 } else {
     echo "<h1>Username atau Password salah!</h1>";

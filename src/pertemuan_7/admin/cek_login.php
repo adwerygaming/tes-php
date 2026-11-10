@@ -4,7 +4,7 @@ include "config.php";
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 if (!isset($_SESSION['username'])) {
-    header("Location: ../login.php");
+    header("Location: ./login.php");
     exit;
 }
 

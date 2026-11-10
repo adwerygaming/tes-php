@@ -1,0 +1,415 @@
+/* =====================================================
+   Style untuk halaman web berita (di luar folder admin)
+   Dipakai oleh index.php (daftar berita dan detail berita)
+   ===================================================== */
+
+:root {
+  --teks: #1f1a2e;
+  --teks-abu: #6b6480;
+  --aksen: #7c3aed;
+  --aksen-gelap: #5b21b6;
+  --aksen-muda: #a78bfa;
+  --latar: #f6f3fd;
+  --garis: #e6e1f3;
+  --footer-latar: #2e1065;
+  --footer-teks: rgba(255, 255, 255, 0.75);
+  --putih: #ffffff;
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  /* Body dibuat flex ke bawah supaya footer selalu menempel di dasar halaman */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--latar);
+  color: var(--teks);
+  font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  line-height: 1.6;
+}
+
+a {
+  color: var(--aksen);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.wadah {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ---------- Bagian atas (header) ---------- */
+/* Header memakai latar ungu bergradasi dengan tulisan putih. */
+.situs-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-image: linear-gradient(135deg, var(--aksen-gelap), var(--aksen));
+  border-bottom: 3px solid var(--aksen-gelap);
+}
+
+.header-dalam {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.merek {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--putih);
+}
+
+.merek:hover {
+  text-decoration: none;
+}
+
+.merek-ikon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.18);
+  color: var(--putih);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.merek-teks {
+  color: rgba(255, 255, 255, 0.88);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+}
+
+.merek-teks strong {
+  color: var(--putih);
+}
+
+/* Menu di kanan atas */
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+  font-size: 14px;
+}
+
+.menu a {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.menu a:hover {
+  color: var(--putih);
+  text-decoration: none;
+}
+
+.menu a.tombol-admin {
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  color: var(--putih);
+}
+
+.menu a.tombol-admin:hover {
+  background-color: var(--putih);
+  color: var(--aksen-gelap);
+}
+
+/* Tombol menu hanya muncul di layar kecil */
+.tombol-menu {
+  display: none;
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.16);
+  color: var(--putih);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ---------- Isi halaman ---------- */
+.isi-utama {
+  /* flex 1 membuat isi mengambil sisa tinggi, footer terdorong ke bawah */
+  flex: 1;
+  padding-top: 28px;
+  padding-bottom: 48px;
+}
+
+.kepala-daftar {
+  margin-bottom: 20px;
+}
+
+.kepala-daftar h1 {
+  margin: 0 0 4px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 30px;
+  line-height: 1.25;
+}
+
+.teks-kecil {
+  margin: 0;
+  color: var(--teks-abu);
+  font-size: 14px;
+}
+
+/* ---------- Daftar kartu berita ---------- */
+.daftar-kartu {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+.kartu {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--putih);
+  border: 1px solid var(--garis);
+  border-radius: var(--radius);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.kartu:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(91, 33, 182, 0.16);
+}
+
+.kartu-gambar {
+  display: block;
+}
+
+.kartu-gambar img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.kartu-isi {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 18px 20px;
+}
+
+.kartu-isi h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+.kartu-isi h2 a {
+  color: var(--teks);
+}
+
+.kartu-isi h2 a:hover {
+  color: var(--aksen);
+  text-decoration: none;
+}
+
+.meta {
+  margin: 0;
+  color: var(--aksen);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ringkasan {
+  margin: 0;
+  color: var(--teks-abu);
+  font-size: 14px;
+}
+
+.tombol-baca {
+  margin-top: auto;
+  padding-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.tombol-baca:hover {
+  color: var(--aksen-gelap);
+  text-decoration: none;
+}
+
+/* Berita pertama dibuat lebih besar (berita utama) */
+.kartu-utama {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  border-top: 4px solid var(--aksen-muda);
+}
+
+.kartu-utama .kartu-gambar {
+  flex: 1 1 50%;
+}
+
+.kartu-utama .kartu-gambar img {
+  height: 100%;
+  min-height: 260px;
+  aspect-ratio: auto;
+}
+
+.kartu-utama .kartu-isi {
+  flex: 1 1 50%;
+  justify-content: center;
+  padding: 26px;
+}
+
+.kartu-utama .kartu-isi h2 {
+  font-size: 28px;
+}
+
+/* Kotak saat belum ada berita */
+.kotak-kosong {
+  padding: 48px 20px;
+  background-color: var(--putih);
+  border: 1px dashed var(--garis);
+  border-radius: var(--radius);
+  color: var(--teks-abu);
+  text-align: center;
+}
+
+/* ---------- Halaman detail berita ---------- */
+.artikel {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px;
+  background-color: var(--putih);
+  border: 1px solid var(--garis);
+  border-radius: var(--radius);
+}
+
+.tautan-balik {
+  display: inline-block;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.judul-artikel {
+  margin: 0 0 10px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 34px;
+  line-height: 1.25;
+}
+
+.gambar-artikel {
+  width: 100%;
+  margin: 20px 0 24px;
+  border-radius: 10px;
+}
+
+.isi-artikel {
+  font-size: 17px;
+  line-height: 1.85;
+  overflow-wrap: break-word;
+}
+
+.bagian-lain {
+  margin-top: 36px;
+}
+
+.bagian-lain h2 {
+  margin: 0 0 16px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+}
+
+/* ---------- Bagian bawah (footer) ---------- */
+/* Footer dibuat minimalis: latar ungu tua agar kontras, satu baris copyright. */
+.situs-footer {
+  padding: 18px 0;
+  background-color: var(--footer-latar);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 13px;
+  text-align: center;
+}
+
+.situs-footer p {
+  margin: 0;
+  color: var(--footer-teks);
+}
+
+/* ---------- Tampilan layar kecil (HP) ---------- */
+@media (max-width: 720px) {
+  .tombol-menu {
+    display: inline-block;
+    margin-left: auto;
+  }
+
+  .menu {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 0 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .menu.buka {
+    display: flex;
+  }
+
+  .kepala-daftar h1 {
+    font-size: 24px;
+  }
+
+  .kartu-utama {
+    flex-direction: column;
+  }
+
+  .kartu-utama .kartu-gambar img {
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+  }
+
+  .kartu-utama .kartu-isi {
+    padding: 18px;
+  }
+
+  .kartu-utama .kartu-isi h2 {
+    font-size: 22px;
+  }
+
+  .artikel {
+    padding: 20px;
+  }
+
+  .judul-artikel {
+    font-size: 26px;
+  }
+
+  .isi-artikel {
+    font-size: 16px;
+  }
+}

@@ -17,10 +17,11 @@
         <div class="container">
             <a class="navbar-brand" href="berita.php">Admin Panel</a>
             <div class="navbar-nav ms-auto align-items-center">
-                <a class="nav-link" href="halamanuser.php">Kelola User</a>
+                <a class="nav-link" href="../index.php">Beranda</a>
+                <a class="nav-link" href="halaman_user.php">Kelola User</a>
                 <a class="nav-link" href="berita.php">Kelola Berita</a>
                 <span class="navbar-text text-white small mx-2">Halo, <?= htmlspecialchars($user_login) ?></span>
-                <a class="nav-link" href="../logout.php">Logout</a>
+                <a class="nav-link" href="./logout.php">Logout</a>
             </div>
         </div>
     </nav>

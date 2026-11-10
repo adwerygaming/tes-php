@@ -76,6 +76,9 @@ include "header.php";
                                 <span class="text-muted">—</span>
                             <?php endif; ?>
 
+                            <? 
+                                // ini unduh 
+                            ?>
                             <a href="berita_unduh_gambar.php?image=<?= urlencode($data["image"]) ?>"
                                 class="btn btn-sm btn-outline-primary d-block mt-1"
                                 title="Unduh gambar berita"
@@ -110,7 +113,7 @@ include "header.php";
                                     class="btn btn-sm btn-warning">Edit</a>
 
                                 <?php if ($status == "draft") : ?>
-                                    <a href="berita_status.php?id=<?= urlencode($data["id"]) ?>&amp;status=terbit"
+                                    <a href="berita_status.php?id=<?= urlencode($data["id"]) ?>&amp;status=publish"
                                         class="btn btn-sm btn-success">Terbitkan</a>
                                 <?php else : ?>
                                     <a href="berita_status.php?id=<?= urlencode($data["id"]) ?>&amp;status=draft"

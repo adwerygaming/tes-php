@@ -11,7 +11,6 @@ $pesan = $_GET["pesan"] ?? "";
 
 <div class="row justify-content-center">
     <div class="col-12 col-md-9 col-lg-7">
-
         <h1 class="h4 mb-3">Tambah Berita</h1>
 
         <?php if ($pesan == "kosong") : ?>
