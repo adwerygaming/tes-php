@@ -14,7 +14,7 @@ if (empty($email) || empty($password)) {
 $user = checkLogin($email, $password);
 
 if ($user === null) {
-    header("Location: ../login.php?err_code=invalid_credentials");
+    header("Location: ../login.php?err_code=invalid_creds");
     exit();
 }
 
