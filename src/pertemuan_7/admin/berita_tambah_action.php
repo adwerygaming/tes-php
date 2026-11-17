@@ -60,13 +60,13 @@ if (!move_uploaded_file($sementara, $folder . $gambarbaru)) {
 
 // 4. Simpan data ke tabel berita
 try {
-    $sql = "INSERT INTO news (title, isi, image, created_at, username)
+    $sql = "INSERT INTO news (title, isi, image, created_at, username, status)
             VALUES (?, ?, ?, ?, ?)";
 
     $stmt = mysqli_prepare($config, $sql);
 
     // Penulis diambil dari user yang sedang login
-    mysqli_stmt_bind_param($stmt, "sssss", $judul, $isi, $gambarbaru, $tanggal, $user_login);
+    mysqli_stmt_bind_param($stmt, "ssssss", $judul, $isi, $gambarbaru, $tanggal, $user_login, 'draft');
     mysqli_stmt_execute($stmt);
 
     // Berhasil, kembali ke daftar berita
