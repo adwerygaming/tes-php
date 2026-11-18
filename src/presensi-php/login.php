@@ -10,7 +10,7 @@ $err_message = null;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AmikomTwo - Login</title>
-    <?php include("config/bootstrap.php") ?>
+    <?php include("config/bootstrap-style.php") ?>
 </head>
 
 <body class="bg-primary-subtle" data-bs-theme="light">
@@ -84,6 +84,8 @@ $err_message = null;
             </div>
         </div>
     </main>
+
+    <?php include("config/bootstrap-script.php") ?>
 </body>
 
 </html>

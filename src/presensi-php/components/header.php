@@ -16,7 +16,7 @@ $pageTitle = $pageTitle ?? 'Dashboard Mahasigma';
 
     <nav class="navbar bg-body border-bottom">
         <div class="container" style="max-width: 80rem;">
-            <a class="navbar-brand fw-semibold" href="/dashboard/index.php">AmikomTwo</a>
+            <a class="navbar-brand fw-semibold" href="/presensi-php/dashboard/index.php">AmikomTwo</a>
             <a href="/presensi-php/dashboard/logout.php" class="btn btn-outline-secondary btn-sm">
                 <i class="bi bi-box-arrow-right me-1"></i> Logout
             </a>

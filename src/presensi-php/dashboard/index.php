@@ -38,7 +38,7 @@ switch ($attend_code) {
                         <a>#<?= htmlspecialchars($user['id']) ?></a>
                         <h5 class="card-title mb-1"><?= htmlspecialchars($user['displayName']) ?></h5>
                         <p class="card-text text-body-secondary mb-0"><?= htmlspecialchars($user['email']) ?></p>
-                        <a href="/dashboard/profile.php" class="btn-sm btn-outline-secondary" title="Edit profile" aria-label="Edit profile">
+                        <a href="/presensi-php/dashboard/profile.php" class="btn-sm btn-outline-secondary" title="Edit profile" aria-label="Edit profile">
                             Edit Profile
                         </a>
                     </div>
