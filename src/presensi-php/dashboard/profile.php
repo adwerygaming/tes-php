@@ -33,6 +33,10 @@ switch ($status) {
         $alertClass = 'alert-danger';
         $alertMessage = 'An error occurred while updating your profile. Please try again.';
         break;
+    case 'id_mismatch':
+        $alertClass = 'alert-danger';
+        $alertMessage = 'Account deletion failed. The ID you entered does not match your account.';
+        break;
     default:
         $alertMessage = null;
 }
@@ -122,12 +126,59 @@ switch ($status) {
             </div>
         </div>
     </section>
+
+    <section>
+        <div class="card shadow-sm border-danger">
+            <div class="card-body p-4">
+                <h5 class="text-danger fw-bold mb-1"><i class="bi bi-exclamation-triangle-fill me-2"></i>Danger Zone</h5>
+                <p class="text-body-secondary mb-3">Once you delete your account, there is no going back. All your data including attendance records will be permanently removed.</p>
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                    <i class="bi bi-trash3-fill me-1"></i> Delete Account
+                </button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="../actions/process_delete_account.php" method="post" id="deleteAccountForm">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteAccountLabel"><i class="bi bi-exclamation-triangle-fill me-2"></i>Delete Account</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>This action is <strong>irreversible</strong>. Your account and all attendance records will be permanently deleted.</p>
+                    <p>To confirm, please enter your user ID: <strong class="text-danger">#<?= htmlspecialchars($user['id']) ?></strong></p>
+
+                    <div class="form-group">
+                        <label for="confirmIdInput" class="form-label">Your User ID</label>
+                        <input type="number" name="confirm_id" id="confirmIdInput" class="form-control" placeholder="Enter your ID" required>
+                    </div>
+
+                    <div id="idMismatchAlert" class="alert alert-warning mt-3 d-none">
+                        <i class="bi bi-exclamation-circle-fill me-1"></i> ID does not match. Please enter the correct ID.
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger" id="confirmDeleteBtn" disabled>
+                        <i class="bi bi-trash3-fill me-1"></i> Permanently Delete
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <?php include '../components/footer.php'; ?>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    // Profile picture live preview
     const fileInput = document.getElementById('profilePictureInput');
     const preview = document.getElementById('avatarPreview');
 
@@ -139,6 +190,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 preview.src = e.target.result;
             };
             reader.readAsDataURL(file);
+        }
+    });
+
+    const expectedId = '<?= (int) $user['id'] ?>';
+    const confirmInput = document.getElementById('confirmIdInput');
+    const deleteBtn = document.getElementById('confirmDeleteBtn');
+    const mismatchAlert = document.getElementById('idMismatchAlert');
+
+    confirmInput.addEventListener('input', function () {
+        const value = this.value.trim();
+        if (value === expectedId) {
+            deleteBtn.disabled = false;
+            mismatchAlert.classList.add('d-none');
+        } else {
+            deleteBtn.disabled = true;
+            if (value.length > 0) {
+                mismatchAlert.classList.remove('d-none');
+            } else {
+                mismatchAlert.classList.add('d-none');
+            }
         }
     });
 });

@@ -75,7 +75,6 @@ if (isset($_FILES['profilePicture']) && $_FILES['profilePicture']['error'] === U
     }
 }
 
-
 $displayName = mysqli_real_escape_string($config, $displayName);
 $birthDate   = mysqli_real_escape_string($config, $birthDate);
 $bio         = mysqli_real_escape_string($config, $bio);

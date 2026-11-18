@@ -40,6 +40,9 @@ $err_message = null;
                             case 'not_satisfied':
                                 $err_message = "Please fill all the required fields.";
                                 break;
+                            case 'account_deleted':
+                                $err_message = "Your account has been successfully deleted. Goodbye!";
+                                break;
                             default:
                                 $err_message = "An unknown error occurred.";
                         }
