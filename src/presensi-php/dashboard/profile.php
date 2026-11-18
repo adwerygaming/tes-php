@@ -158,7 +158,6 @@ switch ($status) {
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Profile picture live preview
     const fileInput = document.getElementById('profilePictureInput');
     const preview = document.getElementById('avatarPreview');
 
