@@ -1,4 +1,6 @@
 <?php
+    declare(strict_types=1);
+
     function checkAttendanceCode(string $code): ?array {
         if ($code === '') {
             return null;

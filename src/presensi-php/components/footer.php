@@ -6,6 +6,8 @@
     </div>
 </footer>
 
+<?php include __DIR__ . '/../config/bootstrap-script.php'; ?>
+
 </body>
 
 </html>

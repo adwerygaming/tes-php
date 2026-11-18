@@ -1,4 +1,6 @@
 <?php
+    declare(strict_types=1);
+
     function checkLogin(string $username, string $password): ?array {
         if ($username === '' || $password === '') {
             return null;

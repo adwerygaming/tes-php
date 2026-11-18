@@ -9,7 +9,7 @@ $pageTitle = $pageTitle ?? 'Dashboard Mahasigma';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle) ?></title>
-    <?php include __DIR__ . '/../config/bootstrap.php'; ?>
+    <?php include __DIR__ . '/../config/bootstrap-style.php'; ?>
 </head>
 
 <body class="bg-body-tertiary d-flex flex-column min-vh-100" data-bs-theme="light">

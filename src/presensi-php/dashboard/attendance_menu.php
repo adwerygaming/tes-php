@@ -1,67 +1,44 @@
 <?php
 session_start();
 include '../config/koneksi.php';
-include '../functions/checkAttendanceCode.php';
+include '../functions/resolveLectureByAttendanceCode.php';
 
-$attendance_code = $_POST['the_code'];
+$attendance_code = $_GET['code'] ?? null;
 
-if (empty($attendance_code)) {
-    header("Location: ../dashboard/index.php?err_code=not_satisfied");
+if ($attendance_code === null) {
+    header("Location: index.php");
     exit();
 }
 
-$lecture = checkAttendanceCode($attendance_code);
+$lecture = resolveLectureByAttendanceCode($attendance_code);
 
 if ($lecture === null) {
-    header("Location: ../dashboard/index.php?err_code=invalid_code");
+    header("Location: index.php");
     exit();
 }
 
-
-$pageTitle = 'Dashboard Mahasigma';
+$pageTitle = 'Attendance Menu';
 include '../components/header.php';
 ?>
 
-<div class="container flex-grow-1 d-flex flex-column gap-4" style="max-width: 80rem;">
+<div class="container flex-grow-1 d-flex flex-column gap-4">
     <section>
         <div class="card shadow-sm">
             <div class="card-body ">
-                <div class="d-flex align-items-center gap-3">
+                <div class="d-flex align-items-center gap-3 text-center justify-content-center">
                     <div>
-                        <a>#<?= htmlspecialchars($lecture['id']) ?></a>
-                        <h5 class="card-title mb-1"><?= htmlspecialchars($lecture['name']) ?></h5>
-                        <p class="card-text text-body-secondary mb-0"><?= htmlspecialchars($lecture['lecturer_name']) ?></p>
+                        <i class="bi bi-check-circle-fill" style="font-size: 4em; color: green;"></i>
+                        <h3><b>Attendance Success</b></h3>
+                        <?php 
+                            echo $lecture['name'] . ' · ' . $lecture['lecturer_name'] . ' · R ' . $lecture['room_code']; ?>
+                            <br> 
+                            <a href="index.php" class="btn btn-outline-secondary mt-3" title="Back to dashboard" aria-label="Back to dashboard">
+                                Back to Dashboard
+                            </a>
                     </div>
                 </div>
-
             </div>
         </div>
-    </section>
-
-    <section class="flex-grow-1 d-flex">
-        <table>
-            <thead>
-                <tr>
-                    <th>Student ID</th>
-                    <th>Student Name</th>
-                    <th>Attendance Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $query = "SELECT * FROM attendances WHERE lecture_id = '" . $lecture['id'] . "'";
-                $result = mysqli_query($GLOBALS['config'], $query) or exit("Error query: $query");
-
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['student_id']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['student_name']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['status']) . "</td>";
-                    echo "</tr>";
-                }
-                ?>
-            </tbody>
-        </table>
     </section>
 </div>
 
