@@ -32,7 +32,11 @@ switch ($attend_code) {
             <div class="card-body ">
                 <div class="d-flex align-items-center gap-3">
                     <div>
-                        <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=<?= htmlspecialchars($user['displayName']) ?>" alt="Avatar" width="64" height="64" class="rounded-circle">
+                        <?php if (!empty($user['profilePicturePath'])): ?>
+                            <img src="/presensi-php/<?= htmlspecialchars($user['profilePicturePath']) ?>" alt="Avatar" width="64" height="64" class="rounded-circle" style="object-fit: cover;">
+                        <?php else: ?>
+                            <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=<?= htmlspecialchars($user['displayName']) ?>" alt="Avatar" width="64" height="64" class="rounded-circle">
+                        <?php endif; ?>
                     </div>
                     <div>
                         <a>#<?= htmlspecialchars($user['id']) ?></a>
