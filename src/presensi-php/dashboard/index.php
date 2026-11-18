@@ -1,11 +1,16 @@
 <?php
 include '../functions/isAuthenticated.php';
+requireRole('student');
+
 include '../functions/resolveUser.php';
 include '../config/koneksi.php';
 
-$user = resolveUser($GLOBALS['_SESSION']['user_id']);
+$user = resolveUser($_SESSION['user_id']);
 
-$lecturesQuery = "SELECT id, name, lecturer_name, datetime, room_code FROM lectures ORDER BY datetime DESC";
+$lecturesQuery = "SELECT l.id, l.name, l.datetime, l.room_code, lec.displayName AS lecturer_name 
+                  FROM lectures l 
+                  LEFT JOIN lecturers lec ON l.lecturer_id = lec.id 
+                  ORDER BY l.datetime DESC";
 $lecturesResult = mysqli_query($config, $lecturesQuery);
 $lectures = [];
 while ($row = mysqli_fetch_assoc($lecturesResult)) {

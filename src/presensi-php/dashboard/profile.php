@@ -1,8 +1,10 @@
 <?php
 include '../functions/isAuthenticated.php';
+requireRole('student');
+
 include '../functions/resolveUser.php';
 
-$user = resolveUser($GLOBALS['_SESSION']['user_id']);
+$user = resolveUser($_SESSION['user_id']);
 
 $pageTitle = 'Edit Profile';
 include '../components/header.php';

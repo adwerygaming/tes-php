@@ -1,5 +1,7 @@
 <?php
-session_start();
+include '../functions/isAuthenticated.php';
+requireRole('student');
+
 include '../config/koneksi.php';
 include '../functions/resolveLectureByAttendanceCode.php';
 
@@ -29,12 +31,16 @@ include '../components/header.php';
                     <div>
                         <i class="bi bi-check-circle-fill" style="font-size: 4em; color: green;"></i>
                         <h3><b>Attendance Success</b></h3>
-                        <?php 
-                            echo $lecture['name'] . ' · ' . $lecture['lecturer_name'] . ' · R ' . $lecture['room_code']; ?>
-                            <br> 
-                            <a href="index.php" class="btn btn-outline-secondary mt-3" title="Back to dashboard" aria-label="Back to dashboard">
-                                Back to Dashboard
-                            </a>
+                        <p class="text-body-secondary mb-3">
+                            <?= htmlspecialchars($lecture['name']) ?>
+                            <?php if (!empty($lecture['lecturer_name'])): ?>
+                                · <?= htmlspecialchars($lecture['lecturer_name']) ?>
+                            <?php endif; ?>
+                            · R <?= htmlspecialchars($lecture['room_code']) ?>
+                        </p>
+                        <a href="index.php" class="btn btn-outline-secondary" title="Back to dashboard" aria-label="Back to dashboard">
+                            Back to Dashboard
+                        </a>
                     </div>
                 </div>
             </div>

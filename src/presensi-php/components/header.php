@@ -1,6 +1,8 @@
 <?php
-// Expects $pageTitle to be set before including this file.
-$pageTitle = $pageTitle ?? 'Dashboard Mahasigma';
+$pageTitle = $pageTitle ?? 'AmikomTwo';
+$brandHref = (isset($_SESSION['role']) && $_SESSION['role'] === 'lecturer') 
+    ? '/presensi-php/dashboard/lecturer/index.php' 
+    : '/presensi-php/dashboard/index.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +18,7 @@ $pageTitle = $pageTitle ?? 'Dashboard Mahasigma';
 
     <nav class="navbar bg-body border-bottom">
         <div class="container" style="max-width: 80rem;">
-            <a class="navbar-brand fw-semibold" href="/presensi-php/dashboard/index.php">AmikomTwo</a>
+            <a class="navbar-brand fw-semibold" href="<?= $brandHref ?>">AmikomTwo</a>
             <a href="/presensi-php/dashboard/logout.php" class="btn btn-outline-secondary btn-sm">
                 <i class="bi bi-box-arrow-right me-1"></i> Logout
             </a>

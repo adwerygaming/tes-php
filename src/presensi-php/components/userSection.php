@@ -18,8 +18,8 @@
                     </a>
                 </div>
             </div>
-
         </div>
+
         <div class="position-absolute end-0 bottom-0 pe-3 text-body-secondary fw-bold user-select-none" style="opacity: 0.12; rotate: 3deg; font-size: 8.5rem; line-height: 0.75; transform: translate(8%, 15%); pointer-events: none; z-index: 0;">
             #<?= htmlspecialchars($user['id']) ?>
         </div>

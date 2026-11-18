@@ -18,7 +18,7 @@
         }
 
         $lecture_id = (int) $lecture->id;
-        $insertStmt = $conn->prepare("INSERT INTO attendances (lecture_id, user_id) VALUES (?, ?)");
+        $insertStmt = $conn->prepare("INSERT INTO attendances (lecture_id, user_id, created_at) VALUES (?, ?, NOW())");
         $insertStmt->bind_param("ii", $lecture_id, $user_id);
 
         if ($insertStmt->execute() && $insertStmt->affected_rows > 0) {

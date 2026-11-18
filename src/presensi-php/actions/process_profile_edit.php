@@ -1,14 +1,11 @@
 <?php
-session_start();
+include '../functions/isAuthenticated.php';
+requireRole('student');
+
 include '../config/koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: ../dashboard/profile.php");
-    exit();
-}
-
-if (empty($_SESSION['user_id'])) {
-    header("Location: ../login.php?err_code=not_logged_in");
     exit();
 }
 

@@ -3,8 +3,8 @@ session_start();
 include '../config/koneksi.php';
 include '../functions/checkLogin.php';
 
-$email = $_POST['email'];
-$password = $_POST['password'];
+$email = trim($_POST['email'] ?? '');
+$password = trim($_POST['password'] ?? '');
 
 if (empty($email) || empty($password)) {
     header("Location: ../login.php?err_code=not_satisfied");
@@ -19,6 +19,11 @@ if ($user === null) {
 }
 
 $_SESSION['user_id'] = $user['id'];
+$_SESSION['role'] = $user['role'];
 
-header("Location: ../dashboard/index.php");
-?>
+if ($user['role'] === 'lecturer') {
+    header("Location: ../dashboard/lecturer/index.php");
+} else {
+    header("Location: ../dashboard/index.php");
+}
+exit();

@@ -1,5 +1,7 @@
 <?php
-session_start();
+include '../functions/isAuthenticated.php';
+requireRole('student');
+
 include '../config/koneksi.php';
 include '../functions/hasAttended.php';
 include '../functions/markAttend.php';

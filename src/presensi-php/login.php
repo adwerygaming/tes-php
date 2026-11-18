@@ -83,7 +83,6 @@ $err_message = null;
                             Login <i class="bi bi-arrow-right ms-1"></i>
                         </button>
                     </form>
-
                 </div>
             </div>
         </div>
