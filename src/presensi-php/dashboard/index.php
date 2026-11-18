@@ -1,8 +1,16 @@
 <?php
 include '../functions/isAuthenticated.php';
 include '../functions/resolveUser.php';
+include '../config/koneksi.php';
 
 $user = resolveUser($GLOBALS['_SESSION']['user_id']);
+
+$lecturesQuery = "SELECT id, name, lecturer_name, datetime, room_code FROM lectures ORDER BY datetime DESC";
+$lecturesResult = mysqli_query($config, $lecturesQuery);
+$lectures = [];
+while ($row = mysqli_fetch_assoc($lecturesResult)) {
+    $lectures[] = $row;
+}
 
 $pageTitle = 'Dashboard Mahasigma';
 include '../components/header.php';
@@ -70,6 +78,39 @@ switch ($attend_code) {
                 <div class="alert theme-danger" role="alert" style="margin-bottom: 1em;">
                     <i class="bi bi-exclamation-triangle-fill me-2"></i>
                     <?php echo $alertMessage; ?>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="card shadow-sm w-100">
+            <div class="card-body p-4">
+                <h4 class="card-title mb-3">Available Lectures</h4>
+
+                <?php if (count($lectures) > 0): ?>
+                <div class="list-group list-group-flush">
+                    <?php foreach ($lectures as $lecture): ?>
+                    <div class="list-group-item d-flex justify-content-between align-items-start px-0">
+                        <div>
+                            <h6 class="mb-1 fw-semibold"><?= htmlspecialchars($lecture['name']) ?></h6>
+                            <small class="text-body-secondary">
+                                <i class="bi bi-person-fill me-1"></i><?= htmlspecialchars($lecture['lecturer_name']) ?>
+                                <span class="mx-1">·</span>
+                                <i class="bi bi-door-open-fill me-1"></i>R <?= htmlspecialchars($lecture['room_code']) ?>
+                            </small>
+                        </div>
+                        <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill">
+                            <i class="bi bi-calendar-event me-1"></i><?= date('d M Y, H:i', strtotime($lecture['datetime'])) ?>
+                        </span>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+                <?php else: ?>
+                <div class="text-center text-body-secondary py-4">
+                    <i class="bi bi-inbox" style="font-size: 2rem;"></i>
+                    <p class="mt-2 mb-0">No lectures available at the moment.</p>
                 </div>
                 <?php endif; ?>
             </div>

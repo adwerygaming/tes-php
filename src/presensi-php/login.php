@@ -20,7 +20,7 @@ $err_message = null;
             <div class="card shadow border-0">
                 <div class="card-body p-4 p-md-5">
                     <div class="text-center mb-3">
-                        <img src="https://placehold.co/300x90?text=Logo" alt="Universitas AMIKOM Yogyakarta" class="img-fluid">
+                        <h1><b>AmikomTwo</b></h1>
                         <p class="text-body-secondary small mt-3 mb-0">
                             Please log in with your AmikomTwo Email and password
                         </p>
