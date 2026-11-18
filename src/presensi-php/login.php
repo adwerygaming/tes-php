@@ -11,9 +11,10 @@ $err_message = null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AmikomTwo - Login</title>
     <?php include("config/bootstrap-style.php") ?>
+    <link rel="stylesheet" href="assets/css/login.css">
 </head>
 
-<body class="bg-primary-subtle" data-bs-theme="light">
+<body data-bs-theme="light" id="loginContainer">
     <main class="container min-vh-100 d-flex align-items-center justify-content-center py-4">
         <div class="w-100" style="max-width: 500px;">
 

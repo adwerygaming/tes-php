@@ -35,30 +35,7 @@ switch ($attend_code) {
 ?>
 
 <div class="container flex-grow-1 d-flex flex-column gap-4" style="max-width: 80rem;">
-    <section>
-        <div class="card shadow-sm">
-            <div class="card-body ">
-                <div class="d-flex align-items-center gap-3">
-                    <div>
-                        <?php if (!empty($user['profilePicturePath'])): ?>
-                            <img src="/presensi-php/<?= htmlspecialchars($user['profilePicturePath']) ?>" alt="Avatar" width="64" height="64" class="rounded-circle" style="object-fit: cover;">
-                        <?php else: ?>
-                            <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=<?= htmlspecialchars($user['displayName']) ?>" alt="Avatar" width="64" height="64" class="rounded-circle">
-                        <?php endif; ?>
-                    </div>
-                    <div>
-                        <a>#<?= htmlspecialchars($user['id']) ?></a>
-                        <h5 class="card-title mb-1"><?= htmlspecialchars($user['displayName']) ?></h5>
-                        <p class="card-text text-body-secondary mb-0"><?= htmlspecialchars($user['email']) ?></p>
-                        <a href="/presensi-php/dashboard/profile.php" class="btn-sm btn-outline-secondary" title="Edit profile" aria-label="Edit profile">
-                            Edit Profile
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
+    <?php include '../components/userSection.php'; ?>
 
     <section class="flex-grow-1 d-flex">
         <div class="card shadow-sm w-100">
