@@ -1,4 +1,6 @@
 <?php
+// auth_login.php
+
 session_start();
 include '../config/koneksi.php';
 include '../functions/checkLogin.php';
@@ -27,3 +29,4 @@ if ($user['role'] === 'lecturer') {
     header("Location: ../dashboard/index.php");
 }
 exit();
+?>

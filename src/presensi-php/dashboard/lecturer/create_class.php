@@ -12,7 +12,7 @@ $err = $_GET['err'] ?? null;
     <div class="card shadow-sm">
         <div class="card-body p-4 p-md-5">
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <h3 class="mb-0 fw-bold"><i class="bi bi-plus-circle-fill text-primary me-2"></i>Create New Class</h3>
+                <h3 class="mb-0 fw-bold">Create New Class</h3>
                 <a href="/presensi-php/dashboard/lecturer/index.php" class="btn btn-outline-secondary btn-sm">
                     <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
                 </a>
